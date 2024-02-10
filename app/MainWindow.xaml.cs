@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,19 +25,61 @@ namespace app
         public MainWindow()
         {
             InitializeComponent();
+
+            List<TaskItem> tasks = new()
+            {
+                new TaskItem("Code"),
+                new TaskItem("Eat")
+            };
+
+            // Set the ItemsSource of the DataGrid to the list of people
+            
+    }
+
+    class TaskItem
+        {
+            public string Task { get; set; }
+
+            public TaskItem(string task)
+            {
+                Task = task;
+            }
+
+            
+        }
+
+        bool isEditing = false;
+
+        // CRUD Operations
+        private void SaveTask(object sender, RoutedEventArgs e)
+        {
+            if (isEditing) 
+            {
+                // implement logic for editing item
+            }
+            else
+            {
+                string newTask = taskInput.Text;
+                taskList.Items.Add(newTask);
+                
+            }
+
+            isEditing = false;
+            taskInput.Clear();
+        }
+
+        private void EditTask(object sender, RoutedEventArgs e)
+        {
+            isEditing = true;
+            taskInput.Text = taskList.SelectedItem.ToString();
+        }
+
+        private void DeleteTask(object sender, RoutedEventArgs e)
+        {
+            // implement logic for deleting item
         }
 
         private void addTaskHere(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
         }

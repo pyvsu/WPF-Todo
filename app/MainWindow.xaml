@@ -4,12 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:app"
-        mc:Ignorable="d" FontFamily="Poppins"
+        mc:Ignorable="d" FontFamily="Segoe UI"
         Title="MainWindow" Height="881" Width="1438">
 
-    <Grid Width="1440" Height="900">
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#E8DEF8"/>
+            <Setter Property="Foreground" Value="#6750A4"/>
+            <Setter Property="Height" Value="40"/>
+            <!-- Set default background color -->
+            <Style.Triggers>
+                <!-- Trigger for when the ListViewItem's IsSelected property is true -->
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#6750A4"/>
+                    <Setter Property="Foreground" Value="#E8DEF8"/>
+                    <!-- Set background color when selected -->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+
+
+    <Grid Width="1440" Height="900" Margin="0,0,-2,0" VerticalAlignment="Top" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="5.7" />
+            <ColumnDefinition Width="0"/>
+            <ColumnDefinition Width="44.3"/>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
@@ -18,45 +40,20 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="49*" />
-            <RowDefinition Height="740*"/>
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="91*"/>
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="30" FontFamily="Poppins" FontWeight="SemiBold" Foreground="#6750A4" Margin="30,15,30,0" Grid.ColumnSpan="5" >
+        <TextBlock Grid.Column="3" Grid.Row="1" FontSize="30" FontFamily="Segoe UI" FontWeight="SemiBold" Foreground="#6750A4" Margin="0,22,20,40" Grid.RowSpan="4" >
             My Tasks
         </TextBlock>
 
-        <Rectangle Grid.Column="1" Grid.Row="2" Width="1328" Height="539" Margin="10,27,90,222" Grid.RowSpan="4" >
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#E8DEF8" />
-            </Rectangle.Fill>
-            <Rectangle.RadiusX>30</Rectangle.RadiusX>
-            <Rectangle.RadiusY>30</Rectangle.RadiusY>
-        </Rectangle>
-
-
-        <Border Grid.Column="1" Grid.Row="5" Width="249" Height="216" Margin="550,140,630,384" CornerRadius="10">
-
-            <!-- Nested Grid for Image and Text -->
-            <Grid>
-               
-                <!-- TextBlock -->
-                <TextBlock Text="Get things done now!" Foreground="White" Margin="36,94,36,94"  FontFamily="Poppins" FontSize="18" RenderTransformOrigin="0.616,0.498"/>
-            </Grid>
-
-            <Border.Background>
-                <SolidColorBrush Color="#6750A4" />
-            </Border.Background>
-
-        </Border>
-
-
-        <Grid Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="10,13,0,27" Grid.RowSpan="3">
+        <Grid Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" Margin="0,13,0,10" Grid.RowSpan="2" Width="1310">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0*"/>
@@ -68,29 +65,38 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="addTask" Width="1328" Height="59" Background="#E8DEF8" Margin="0,598,0,122" Text="Write Task Here" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextChanged="addTaskHere" FontFamily="Poppins" HorizontalAlignment="Left" Grid.Column="2" Grid.ColumnSpan="3">
+            
+            <TextBox x:Name="taskInput" Width="1164" Background="#E8DEF8" Margin="0,629,0,120" Text="Add Task Here" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI" HorizontalAlignment="Center" Grid.Column="2" Height="34" Grid.ColumnSpan="2" TextAlignment="Center">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="30"  >
-                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10"  >
+                            <ScrollViewer x:Name="PART_ContentHost" HorizontalAlignment="Left" Width="1326"/>
                         </Border>
                     </ControlTemplate>
                 </TextBox.Template>
                 <TextBox.Resources>
                     <Style TargetType="TextBox">
                         <Setter Property="Foreground" Value="#21005D"/>
-                        <Setter Property="FontSize" Value="28"/>
+                        <Setter Property="FontSize" Value="18"/>
                         <!-- Adjust the font size as needed -->
                         <Setter Property="Padding" Value="5"/>
                         <!-- Adjust the padding as needed -->
                     </Style>
                 </TextBox.Resources>
-
             </TextBox>
+            
+            <ListView x:Name="taskList" Grid.ColumnSpan="5" Margin="0,10,0,192" FontFamily="Segoe UI" FontSize="16">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
         </Grid>
 
 
-        <Button Grid.Column="1" Content="Edit" HorizontalAlignment="Left" Height="26" Margin="1145,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="80" Foreground="#FFFF" Click="Button_Click">
+        <Button Grid.Column="3" Content="Edit" HorizontalAlignment="Left" Height="34" Margin="1013,30,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Foreground="#FFFF" Click="EditTask" FontFamily="Segoe UI" FontSize="16">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -118,7 +124,7 @@
             </Button.Style>
         </Button>
 
-        <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Height="25" Margin="1230,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="80" Foreground="#FFFF" Click="Button_Click_1">
+        <Button Grid.Column="3" Content="Delete" HorizontalAlignment="Left" Margin="1173,30,0,0" Grid.Row="1" Width="137" Foreground="#FFFF" Click="DeleteTask" FontFamily="Segoe UI" Height="34" FontSize="16">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -147,7 +153,7 @@
         </Button>
 
 
-        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Height="25" Margin="1230,583,0,0" Grid.Row="5" VerticalAlignment="Top" Width="80" Foreground="#FFFF" Click="Button_Click_1" RenderTransformOrigin="0.125,-5.27">
+        <Button Grid.Column="3" Content="Save" HorizontalAlignment="Left" Height="34" Margin="1173,590,0,0" Grid.Row="5" VerticalAlignment="Top" Width="137" Foreground="#FFFF" Click="SaveTask" RenderTransformOrigin="0.125,-5.27" FontFamily="Segoe UI" FontSize="16">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>
