@@ -1,0 +1,184 @@
+﻿<Window x:Class="app.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:app"
+        mc:Ignorable="d" FontFamily="Poppins"
+        Title="MainWindow" Height="881" Width="1438">
+
+    <Grid Width="1440" Height="900">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="49*" />
+            <RowDefinition Height="740*"/>
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="30" FontFamily="Poppins" FontWeight="SemiBold" Foreground="#6750A4" Margin="30,15,30,0" Grid.ColumnSpan="5" >
+            My Tasks
+        </TextBlock>
+
+        <Rectangle Grid.Column="1" Grid.Row="2" Width="1328" Height="539" Margin="10,27,90,222" Grid.RowSpan="4" >
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#E8DEF8" />
+            </Rectangle.Fill>
+            <Rectangle.RadiusX>30</Rectangle.RadiusX>
+            <Rectangle.RadiusY>30</Rectangle.RadiusY>
+        </Rectangle>
+
+
+        <Border Grid.Column="1" Grid.Row="5" Width="249" Height="216" Margin="550,140,630,384" CornerRadius="10">
+
+            <!-- Nested Grid for Image and Text -->
+            <Grid>
+               
+                <!-- TextBlock -->
+                <TextBlock Text="Get things done now!" Foreground="White" Margin="36,94,36,94"  FontFamily="Poppins" FontSize="18" RenderTransformOrigin="0.616,0.498"/>
+            </Grid>
+
+            <Border.Background>
+                <SolidColorBrush Color="#6750A4" />
+            </Border.Background>
+
+        </Border>
+
+
+        <Grid Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="10,13,0,27" Grid.RowSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="664*"/>
+                <ColumnDefinition Width="517*"/>
+                <ColumnDefinition Width="148*"/>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="addTask" Width="1328" Height="59" Background="#E8DEF8" Margin="0,598,0,122" Text="Write Task Here" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextChanged="addTaskHere" FontFamily="Poppins" HorizontalAlignment="Left" Grid.Column="2" Grid.ColumnSpan="3">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="30"  >
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+                <TextBox.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Foreground" Value="#21005D"/>
+                        <Setter Property="FontSize" Value="28"/>
+                        <!-- Adjust the font size as needed -->
+                        <Setter Property="Padding" Value="5"/>
+                        <!-- Adjust the padding as needed -->
+                    </Style>
+                </TextBox.Resources>
+
+            </TextBox>
+        </Grid>
+
+
+        <Button Grid.Column="1" Content="Edit" HorizontalAlignment="Left" Height="26" Margin="1145,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="80" Foreground="#FFFF" Click="Button_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#6750A4"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#1D192B"/>
+                                        <!-- Change this color to the desired hover color -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Height="25" Margin="1230,21,0,0" Grid.Row="1" VerticalAlignment="Top" Width="80" Foreground="#FFFF" Click="Button_Click_1">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#6750A4"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#1D192B"/>
+                                        <!-- Change this color to the desired hover color -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+
+        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Height="25" Margin="1230,583,0,0" Grid.Row="5" VerticalAlignment="Top" Width="80" Foreground="#FFFF" Click="Button_Click_1" RenderTransformOrigin="0.125,-5.27">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#6750A4"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#1D192B"/>
+                                        <!-- Change this color to the desired hover color -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+    </Grid>
+
+
+
+
+
+</Window>
