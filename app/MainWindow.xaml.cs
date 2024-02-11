@@ -4,8 +4,6 @@ using System.Windows;
 
 namespace app
 {
-    
-    // Abstraction
     // Interface defining the basic operations for managing tasks
     public interface ITaskManager
     {
@@ -14,15 +12,12 @@ namespace app
         void DeleteTask(int index);
     }
 
-   
     // MainWindow class that serves as the application's main window and implements ITaskManager interface
     public partial class MainWindow : Window, ITaskManager
     {
         // Collection to hold TaskItem objects
         private ObservableCollection<TaskItem> Tasks { get; set; }
 
-
-        // Encapsulation
         // Constructor initializing the window components and Tasks collection
         public MainWindow()
         {
@@ -58,7 +53,6 @@ namespace app
             Tasks.RemoveAt(index);
         }
 
-        // Encapsulation
         // TaskItem class representing a task
         public class TaskItem
         {
@@ -70,7 +64,6 @@ namespace app
                 TaskName = taskName;
             }
 
-            // Polymorphism
             // Virtual method to display the task, can be overridden in derived classes
             public virtual string DisplayTask()
             {
