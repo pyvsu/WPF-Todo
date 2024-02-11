@@ -1,41 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace app
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public interface ITaskManager
     {
-        public ObservableCollection<TaskItem> Tasks { get; set; }
+        void AddTask(string taskName);
+        void EditTask(int index, string taskName);
+        void DeleteTask(int index);
+    }
+
+    public partial class MainWindow : Window, ITaskManager
+    {
+        private ObservableCollection<TaskItem> Tasks { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-
-            Tasks = new ObservableCollection<TaskItem>
-        {
-            
-        };
-
-            // Set the ItemsSource of the DataGrid to the list of tasks
+            Tasks = new ObservableCollection<TaskItem>();
             taskList.ItemsSource = Tasks;
+
+
         }
+        public void RefreshListView()
+        {
+            var itemsSource = taskList.ItemsSource;
+            taskList.ItemsSource = null;
+            taskList.ItemsSource = itemsSource;
+        }
+
+
+        public void AddTask(string taskName)
+        {
+            Tasks.Add(new TaskItem(taskName));
+        }
+
+        public void EditTask(int index, string taskName)
+        {
+            Tasks[index].UpdateTaskName(taskName);
+            RefreshListView();
+        }
+
+        public void DeleteTask(int index)
+        {
+            Tasks.RemoveAt(index);
+        }
+
         public class TaskItem
         {
             public string TaskName { get; set; }
@@ -45,31 +56,33 @@ namespace app
                 TaskName = taskName;
             }
 
-            public override string ToString()
+            public virtual string DisplayTask()
             {
                 return TaskName;
+            }
+
+            public void UpdateTaskName(string newTaskName)
+            {
+                TaskName = newTaskName;
             }
         }
 
 
-        // CRUD Operations
+
         private void SaveTask(object sender, RoutedEventArgs e)
         {
             if (isEditing)
             {
-                // implement logic for editing item
-                Tasks[selectedIndex] = new TaskItem(taskInput.Text);
+                EditTask(selectedIndex, taskInput.Text);
             }
             else
             {
-                string newTask = taskInput.Text;
-                Tasks.Add(new TaskItem(newTask));
+                AddTask(taskInput.Text);
             }
 
             isEditing = false;
             taskInput.Clear();
         }
-
 
         private void EditTask(object sender, RoutedEventArgs e)
         {
@@ -77,21 +90,17 @@ namespace app
             {
                 isEditing = true;
                 taskInput.Text = taskList.SelectedItem.ToString();
-                taskInput.Focus(); // Set the focus to the taskInput TextBox
+                taskInput.Focus();
                 selectedIndex = taskList.SelectedIndex;
             }
         }
+
         private void DeleteTask(object sender, RoutedEventArgs e)
         {
             if (taskList.SelectedItem != null)
             {
-                Tasks.RemoveAt(taskList.SelectedIndex);
+                DeleteTask(taskList.SelectedIndex);
             }
-        }
-
-        private void addTaskHere(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private int selectedIndex = -1;
