@@ -22,66 +22,79 @@ namespace app
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<TaskItem> Tasks { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
-            List<TaskItem> tasks = new()
-            {
-                new TaskItem("Code"),
-                new TaskItem("Eat")
-            };
-
-            // Set the ItemsSource of the DataGrid to the list of people
-            
-    }
-
-    class TaskItem
+            Tasks = new ObservableCollection<TaskItem>
         {
-            public string Task { get; set; }
+            
+        };
 
-            public TaskItem(string task)
+            // Set the ItemsSource of the DataGrid to the list of tasks
+            taskList.ItemsSource = Tasks;
+        }
+        public class TaskItem
+        {
+            public string TaskName { get; set; }
+
+            public TaskItem(string taskName)
             {
-                Task = task;
+                TaskName = taskName;
             }
 
-            
+            public override string ToString()
+            {
+                return TaskName;
+            }
         }
 
-        bool isEditing = false;
 
         // CRUD Operations
         private void SaveTask(object sender, RoutedEventArgs e)
         {
-            if (isEditing) 
+            if (isEditing)
             {
                 // implement logic for editing item
+                Tasks[selectedIndex] = new TaskItem(taskInput.Text);
             }
             else
             {
                 string newTask = taskInput.Text;
-                taskList.Items.Add(newTask);
-                
+                Tasks.Add(new TaskItem(newTask));
             }
 
             isEditing = false;
             taskInput.Clear();
         }
 
+
         private void EditTask(object sender, RoutedEventArgs e)
         {
-            isEditing = true;
-            taskInput.Text = taskList.SelectedItem.ToString();
+            if (taskList.SelectedItem != null)
+            {
+                isEditing = true;
+                taskInput.Text = taskList.SelectedItem.ToString();
+                taskInput.Focus(); // Set the focus to the taskInput TextBox
+                selectedIndex = taskList.SelectedIndex;
+            }
         }
-
         private void DeleteTask(object sender, RoutedEventArgs e)
         {
-            // implement logic for deleting item
+            if (taskList.SelectedItem != null)
+            {
+                Tasks.RemoveAt(taskList.SelectedIndex);
+            }
         }
 
         private void addTaskHere(object sender, TextChangedEventArgs e)
         {
 
         }
+
+        private int selectedIndex = -1;
+        private bool isEditing = false;
     }
 }
